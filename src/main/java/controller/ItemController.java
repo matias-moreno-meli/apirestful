@@ -1,19 +1,26 @@
 package controller;
 
 import domain.Item;
-import services.ItemMeliService;
+import services.ItemService;
+
+import java.util.List;
 
 public class ItemController {
 
-    ItemMeliService iItemMeliService;
+
+    ItemService itemService;
 
     public ItemController() {
-        this.iItemMeliService = new ItemMeliService();
+        this.itemService = new ItemService();
     }
 
-    public Item[] getAll(String query){
+    public List<String> getAllTitleItems(String query){
+        return itemService.getAllTitleItems(query);
+    }
 
-        return iItemMeliService.getAllItem(query);
+    public List<Item> getAllItems(String query, String price, String listingType, String tag, String priceRange) {
+
+        return null;
     }
 
 }

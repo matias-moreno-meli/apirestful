@@ -2,7 +2,6 @@ package services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import domain.Item;
 
@@ -11,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
-public class ItemMeliService {
+public class ApiMeliService {
 
     public Item[] getAllItem(String query) {
 
@@ -46,8 +45,6 @@ public class ItemMeliService {
             Gson gson = new Gson();
             items = gson.fromJson(jsonObject.getAsJsonArray("results"), Item[].class);
 
-//            System.out.println(urlString.toString());
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
@@ -58,6 +55,5 @@ public class ItemMeliService {
 
         return items;
     }
-
 
 }
