@@ -1,5 +1,7 @@
 package services;
 
+import dao.IItemDao;
+import dao.ItemDao;
 import domain.Item;
 
 import java.util.*;
@@ -7,14 +9,15 @@ import java.util.stream.Collectors;
 
 public class ItemService {
 
-    private HashMap<String, Item[]> itemHashMap;
-    private ApiMeliService apiMeliService;
+    private IExternalApiItem apiMeliService;
+    private IItemDao dao;
+
     private List<Item> items;
 
     public ItemService() {
-        this.itemHashMap = new HashMap<>();
         this.apiMeliService = new ApiMeliService();
         this.items = new ArrayList<>();
+        this.dao = new ItemDao();
     }
 
     public List<String> getAllTitleItems(String query) {
@@ -96,28 +99,13 @@ public class ItemService {
 
     private Item[] getAllItems(String query) {
 
-        Item[] items = getItemsMap(query);
+        Item[] items = dao.getItemsMap(query);
 
         if (items == null) {
             items = apiMeliService.getAllItem(query);
-            saveItemsMap(query, items);
-
+            dao.saveItemsMap(query, items);
         }
-
         return items;
-
-    }
-
-    private void saveItemsMap(String query, Item[] items) {
-
-        if (!this.itemHashMap.containsKey(query)) {
-            this.itemHashMap.put(query, items);
-        }
-
-    }
-
-    private Item[] getItemsMap(String query) {
-        return this.itemHashMap.get(query);
     }
 
 }

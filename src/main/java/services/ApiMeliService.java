@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
-public class ApiMeliService {
+public class ApiMeliService implements IExternalApiItem{
 
     public Item[] getAllItem(String query) {
 
