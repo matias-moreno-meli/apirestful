@@ -50,10 +50,15 @@ public class ItemService {
 
     private void filterPriceRange(String priceRange) {
 
-//        String[] parts = priceRange.split("-");
-//        long min = Long.parseLong(parts[0]);
-//        long max = Long.parseLong(parts[1]);
+        String[] parts = priceRange.split("-");
+        long min = Long.parseLong(parts[0]);
+        long max = Long.parseLong(parts[1]);
 
+        List<Item> filteredList = this.items.stream()
+                .filter(item -> (item.getPrice() >= min) && (item.getPrice() <= max))
+                .collect(Collectors.toList());
+
+        this.items = filteredList;
 
     }
 
@@ -103,7 +108,6 @@ public class ItemService {
 
     }
 
-
     private void saveItemsMap(String query, Item[] items) {
 
         if (!this.itemHashMap.containsKey(query)) {
@@ -115,6 +119,5 @@ public class ItemService {
     private Item[] getItemsMap(String query) {
         return this.itemHashMap.get(query);
     }
-
 
 }
