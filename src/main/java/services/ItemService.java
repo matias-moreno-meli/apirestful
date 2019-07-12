@@ -2,10 +2,8 @@ package services;
 
 import domain.Item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ItemService {
 
@@ -31,11 +29,64 @@ public class ItemService {
         return resuts;
     }
 
-    public List<Item> getItemsFilter(String query, String price, String listingType, String tag, String priceRange) {
+    public List<Item> getItemsFilter(String query, String orderBy, String val, String tag, String priceRange) {
         this.items = Arrays.asList(getAllItems(query));
 
-        return  null;
+        if (priceRange != null) {
+            filterPriceRange(priceRange);
+        }
 
+        if (tag != null) {
+            filterTag(tag);
+        }
+
+        if (orderBy != null && val != null) {
+            orderBy(orderBy, val);
+        }
+
+        return this.items;
+
+    }
+
+    private void filterPriceRange(String priceRange) {
+
+//        String[] parts = priceRange.split("-");
+//        long min = Long.parseLong(parts[0]);
+//        long max = Long.parseLong(parts[1]);
+
+
+    }
+
+    private void filterTag(String tag) {
+
+        List<Item> filteredList = this.items.stream()
+                .filter(item -> Arrays.asList(item.getTags()).stream()
+                        .anyMatch(val ->
+                                val.equals(tag)))
+                .collect(Collectors.toList());
+
+        this.items = filteredList;
+    }
+
+    private void orderBy(String atrr, String val) {
+        switch (atrr.toUpperCase()) {
+            case "PRICE":
+                if (val.equalsIgnoreCase("ASC")) {
+                    this.items.sort(Comparator.comparing(Item::getPrice));
+                } else if (val.equalsIgnoreCase("DESC")) {
+                    this.items.sort(Comparator.comparing(Item::getPrice).reversed());
+                }
+                break;
+            case "LISTINGTYPE":
+                if (val.equalsIgnoreCase("ASC")) {
+                    this.items.sort(Comparator.comparing(Item::getListingTypeId));
+                } else if (val.equalsIgnoreCase("DESC")) {
+                    this.items.sort(Comparator.comparing(Item::getListingTypeId).reversed());
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private Item[] getAllItems(String query) {

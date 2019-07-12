@@ -8,7 +8,7 @@ public class Item {
     @SerializedName("site_id")
     private String siteID;
     private String title;
-    private double price;
+    private long price;
     @SerializedName("currency_id")
     private String currencyId;
     @SerializedName("listing_type_id")
@@ -45,11 +45,11 @@ public class Item {
         this.title = title;
     }
 
-    public double getPrice() {
-        return price;
+    public long getPrice() {
+        return this.price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 

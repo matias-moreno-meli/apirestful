@@ -14,13 +14,13 @@ public class ItemController {
         this.itemService = new ItemService();
     }
 
-    public List<String> getAllTitleItems(String query){
+    public List<String> getAllTitleItems(String query) {
         return itemService.getAllTitleItems(query);
     }
 
-    public List<Item> getAllItems(String query, String price, String listingType, String tag, String priceRange) {
+    public List<Item> getAllItems(String query, String orderBy, String val, String tag, String priceRange) {
 
-        return null;
+        return itemService.getItemsFilter(query, orderBy, val, tag, priceRange);
     }
 
 }
